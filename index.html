@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bizim Hikayemiz ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e63946;
+            --secondary: #ffb703;
+            --bg-color: #fff0f3;
+            --card-bg: #ffffff;
+            --text-color: #2b2d42;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Lock Screen */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #lock-screen h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .input-group {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .input-group input {
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .input-group button {
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            background-color: #d80032;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .input-group button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Main Container */
+        .container {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            position: relative;
+        }
+
+        .card h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Photo Styles */
+        .photo-container {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            max-height: 400px;
+        }
+
+        /* Timer */
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .timer-box {
+            background: #fff5f6;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #ffe1e5;
+        }
+
+        .timer-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .timer-box label {
+            font-size: 0.75rem;
+            color: #777;
+        }
+
+        /* Info List */
+        .info-list {
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .info-list li {
+            list-style: none;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            text-align: left;
+        }
+
+        .quiz-question {
+            margin-bottom: 20px;
+            background: #fff8f9;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .quiz-question p {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .quiz-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .quiz-input-group input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .quiz-input-group button {
+            padding: 8px 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .feedback {
+            font-size: 0.85rem;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        /* Secret Notes */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .note-btn {
+            background: #ffe3e8;
+            color: #c9184a;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .note-btn:hover {
+            background: #ffccd5;
+        }
+
+        /* Letter Card - Düz Yazı (Poppins) */
+        .letter-content {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            text-align: left;
+            white-space: pre-line;
+            color: #333;
+            background: #fffdf9;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px dashed #ffd1d7;
+        }
+
+        /* Flying Hearts Animation */
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 3.5s linear forwards;
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.3);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Kilit Ekranı -->
+    <div id="lock-screen">
+        <h2>Aşkımızın Kilit Ekranı ✨</h2>
+        <p>Giriş yapmak için şifreyi gir sevgilim</p>
+        <div class="input-group">
+            <input type="password" id="pass-input" placeholder="Şifre...">
+            <button onclick="checkPass()">Aç ❤️</button>
+        </div>
+        <p id="error-msg" style="color: #fff; margin-top: 10px; font-size: 0.85rem; display: none;">Hatalı şifre sevgilim! 😉</p>
+    </div>
+
+    <!-- Ana Sayfa İçeriği -->
+    <div class="container" id="main-content">
+        
+        <!-- Üst Fotoğraf Kartı -->
+        <div class="card" style="padding: 15px;">
+            <div class="photo-container" style="margin-bottom: 0;">
+                <img src="https://i.ibb.co/4nHNRpWz/738.jpg" alt="Bizim Hikayemiz">
+            </div>
+        </div>
+
+        <!-- Müzik Çalar Card (Çalışan Doğrudan Oynatıcı) -->
+        <div class="card">
+            <h3>Bizim Şarkımız 🎵</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">Müziği başlatmak için butona dokun sevgilim...</p>
+            <div id="player-container">
+                <button id="play-music-btn" onclick="playMusic()" style="background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">🎶 Şarkıyı Başlat</button>
+                <div id="spotify-wrapper" style="display: none; margin-top: 10px;">
+                    <iframe id="spotify-player" style="border-radius:12px" src="" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sayaç Card -->
+        <div class="card">
+            <h3>İyi ki Sen ❤️</h3>
+            <p style="font-size: 0.9rem;">Seninle geçen muhteşem süremiz:</p>
+            <div class="timer-grid">
+                <div class="timer-box"><span id="days">0</span><label>Gün</label></div>
+                <div class="timer-box"><span id="hours">0</span><label>Saat</label></div>
+                <div class="timer-box"><span id="minutes">0</span><label>Dakika</label></div>
+                <div class="timer-box"><span id="seconds">0</span><label>Saniye</label></div>
+            </div>
+        </div>
+
+        <!-- Seni Ne Kadar Tanıyorum? Card -->
+        <div class="card">
+            <h3>Seni Ne Kadar Tanıyorum? 🌟</h3>
+            <ul class="info-list">
+                <li>🎂 <b>Doğum Günü:</b> 2 Mayıs 2012 (Boğa Burcu)</li>
+                <li>🏼 <b>Saç Rengi:</b> Sarı</li>
+                <li>⚽ <b>Takım:</b> Beşiktaş</li>
+                <li>🍕 <b>Sevdiği Yemekler:</b> Lahmacun, Çiğ Köfte, Et Dürüm, Pide, Burger, Patates</li>
+                <li>🥤 <b>İçecekler:</b> Su, Coca Cola</li>
+                <li>🍨 <b>Tatlılar:</b> Soğuk Baklava, Kaşık Tatlısı</li>
+                <li>🍫 <b>Çikolata:</b> Milka, Dubai Çikolatası, Beyaz Çikolata</li>
+                <li>🌷 <b>En Sevdiği Çiçek:</b> Beyaz Lale (Ve Ben 🙈)</li>
+                <li>🍂 <b>Mevsim & Müzisyen:</b> Sonbahar / Kavak</li>
+                <li>✈️ <b>Hayalindeki Rotalar:</b> İsviçre Alp Dağları 🏔️, Maldivler 🏝️, Avustralya 🦘</li>
+            </ul>
+        </div>
+
+        <!-- Test Card -->
+        <div class="card">
+            <h3>Göksu & Sedat Testi 🎯</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Beni ne kadar tanıyorsun? Soruları yanıtla, doğru cevapta kalpleri uçur! 🥰</p>
+            
+            <div class="quiz-container">
+                <!-- S1 -->
+                <div class="quiz-question">
+                    <p>1. Bizim sevgili olduğumuz tarih nedir?</p>
+                    <div class="quiz-input-group">
+                        <input type="text" id="q1" placeholder="Cevabın...">
+                        <button onclick="checkAnswer('q1', ['28 agustos', '28 agustos 2026', '28 ağustos', '28 ağustos 2026'], 'fb1')">Gönder</button>
+                    </div>
+                    <div id="fb1" class="feedback"></div>
+                </div>
+                <!-- S2 -->
+                <div class="quiz-question">
+                    <p>2. Benim en sevdiğim çikolata hangisidir?</p>
+                    <div class="quiz-input-group">
+                        <input type="text" id="q2" placeholder="Cevabın...">
+                        <button onclick="checkAnswer('q2', ['browni', 'brownie'], 'fb2')">Gönder</button>
+                    </div>
+                    <div id="fb2" class="feedback"></div>
+                </div>
+                <!-- S3 -->
+                <div class="quiz-question">
+                    <p>3. Benim doğum günüm ne zaman?</p>
+                    <div class="quiz-input-group">
+                        <input type="text" id="q3" placeholder="Cevabın...">
+                        <button onclick="checkAnswer('q3', ['7 ocak', '7 ocak 2012'], 'fb3')">Gönder</button>
+                    </div>
+                    <div id="fb3" class="feedback"></div>
+                </div>
+                <!-- S4 -->
+                <div class="quiz-question">
+                    <p>4. Benim en sevdiğim içecek grubu hangisidir?</p>
+                    <div class="quiz-input-group">
+                        <input type="text" id="q4" placeholder="Cevabın...">
+                        <button onclick="checkAnswer('q4', ['kahve', 'kahveli', 'kahveli seyler', 'kahveli şeyler'], 'fb4')">Gönder</button>
+                    </div>
+                    <div id="fb4" class="feedback"></div>
+                </div>
+                <!-- S5 -->
+                <div class="quiz-question">
+                    <p>5. Benim en sevdiğim renk hangisidir?</p>
+                    <div class="quiz-input-group">
+                        <input type="text" id="q5" placeholder="Cevabın...">
+                        <button onclick="checkAnswer('q5', ['bordo'], 'fb5')">Gönder</button>
+                    </div>
+                    <div id="fb5" class="feedback"></div>
+                </div>
+                <!-- S6 -->
+                <div class="quiz-question">
+                    <p>6. Benim tuttuğum takım hangisidir?</p>
+                    <div class="quiz-input-group">
+                        <input type="text" id="q6" placeholder="Cevabın...">
+                        <button onclick="checkAnswer('q6', ['galatasaray', 'gs'], 'fb6')">Gönder</button>
+                    </div>
+                    <div id="fb6" class="feedback"></div>
+                </div>
+                <!-- S7 -->
+                <div class="quiz-question">
+                    <p>7. Senin asla unutmaman gereken detay: Benim yaşadığım şehir hangisidir?</p>
+                    <div class="quiz-input-group">
+                        <input type="text" id="q7" placeholder="Cevabın...">
+                        <button onclick="checkAnswer('q7', ['hatay'], 'fb7')">Gönder</button>
+                    </div>
+                    <div id="fb7" class="feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gizli Notlar Card -->
+        <div class="card">
+            <h3>Sana Bir Not Bıraktım 💌</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Hangi durumdaysan ona tıkla sevgilim...</p>
+            <div class="notes-grid">
+                <button class="note-btn" onclick="alert('Hemen gözlerini kapat, sana sımsıkı sarıldığımı hisset ve bana mesaj at sevgilim! 💖')">🙈 Beni Özlediğinde Tıkla</button>
+                <button class="note-btn" onclick="alert('Unutma, ben her zaman senin yanındayım. Sen benim en değerli varlığımsın, yüzün hep gülsün! 🥺✨')">🥺 Modun Düşük Olduğunda Tıkla</button>
+                <button class="note-btn" onclick="alert('Seni dünyadaki her şeyden çok seven bir Göksu var, bunu sakın unutma! 🥰')">💖 Gülümsemek İstediğinde Tıkla</button>
+            </div>
+        </div>
+
+        <!-- Mektup Kartı -->
+        <div class="card">
+            <h3>Sana Mektubum 📝</h3>
+            <div class="photo-container">
+                <img src="https://i.ibb.co/v4ykg2hp/739.jpg" alt="Romantik Dans">
+            </div>
+            <div class="letter-content">
+Sevgilim, hayatımın anlamı...
+
+Seninle çıktığımız bu güzel yolda benimle yürüdüğün için sana çok teşekkür ederim. İlk tanıştığımız zamanlarda bir gün sevgili olabileceğimizi ve benim seninle bu kadar mutlu olabileceğimi hiç düşünmemiştim. Arkamda birçok sorunu bırakıp seninle yeni bir sayfaya adım attım. Çünkü ben sana gerçekten çok aşığım.
+
+Hayallerimde hep senin gibi biri vardı ve en sonunda sen çıktın karşıma. Seninleyken o kadar mutluyum ki... Yanımda sen olduğun sürece beni kimse üzemez. Ben hayatımın aşkını, yani seni buldum. Güne senin varlığınla başlamayı o kadar çok seviyorum ki tahmin bile edemezsin.
+
+Biliyor musun, seninle sevgili olduktan sonra hiç üzülmedim. Ve bunların hepsi senin sayende... Sadece varlığını düşünmek bile içimi ısıtmaya yetiyor. Yedi cihan bir araya da gelse seni sevmekten asla vazgeçmeyeceğim sevgilim. Sevgili olduğumuz o gün, benim hayata en baştan başlamama sebep oldu.
+
+Bana bu hisleri yaşattığın ve hayatıma girdiğin için sana minnettarım. İyi ki benim oldun, iyi ki varsın. Seni her şeyden çok seviyorum...
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Password Check
+        function checkPass() {
+            const input = document.getElementById('pass-input').value;
+            if (input === '2808') {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'flex';
+                startTimer();
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        // Play Music Directly on Button Click
+        function playMusic() {
+            const player = document.getElementById('spotify-player');
+            player.src = "https://open.spotify.com/embed/track/6K47Oq8Y1OshU9qf1E1K8e?utm_source=generator&autoplay=1";
+            document.getElementById('play-music-btn').style.display = 'none';
+            document.getElementById('spotify-wrapper').style.display = 'block';
+        }
+
+        // Live Timer
+        function startTimer() {
+            const startDate = new Date('2026-08-26T22:20:00');
+            setInterval(() => {
+                const now = new Date();
+                const diff = now - startDate;
+
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const minutes = Math.floor((diff / 1000 / 60) % 60);
+                    const seconds = Math.floor((diff / 1000) % 60);
+
+                    document.getElementById('days').innerText = days;
+                    document.getElementById('hours').innerText = hours;
+                    document.getElementById('minutes').innerText = minutes;
+                    document.getElementById('seconds').innerText = seconds;
+                }
+            }, 1000);
+        }
+
+        // Quiz Logic & Flying Hearts
+        function checkAnswer(inputId, validAnswers, feedbackId) {
+            const userAns = document.getElementById(inputId).value.trim().toLowerCase();
+            const fb = document.getElementById(feedbackId);
+
+            if (validAnswers.includes(userAns)) {
+                fb.style.color = 'green';
+                fb.innerText = 'Doğru bildin sevgilim! 😘❤️';
+                spawnHearts();
+            } else {
+                fb.style.color = '#d80032';
+                fb.innerText = 'Bir daha düşün bakalım sevgilim... 😉';
+            }
+        }
+
+        // Spawn Flying Hearts Effect
+        function spawnHearts() {
+            const heartIcons = ['❤️', '💖', '💕', '💗', '😘'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3500);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+  </html>
+              
